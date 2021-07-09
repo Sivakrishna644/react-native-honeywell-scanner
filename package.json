@@ -1,20 +1,23 @@
 {
-  "name": "react-native-honeywell-scanner-v2",
-  "title": "React Native Honeywell Scanner-v2",
-  "version": "0.0.2",
+  "name": "react-native-honeywell-scanner-v3",
+  "title": "React Native Honeywell Scanner-v3",
+  "version": "0.0.3",
   "description": "Bridge to use the Honeywell scanner",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts":
   {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc"  
   },
+  "precommit": [
+    "build"
+  ],
   "repository":
   {
     "type": "git",
-    "url": "git+https://github.com/AMI3GOLtd/react-native-honeywell-scanner.git",
-    "baseUrl": "https://github.com/AMI3GOLtd/react-native-honeywell-scanner.git"
+    "url": "git+https://github.com/Sivakrishna644/react-native-honeywell-scanner.git",
+    "baseUrl": "https://github.com/Sivakrishna644/react-native-honeywell-scanner.git"
   },
   "keywords":
   [
@@ -28,9 +31,9 @@
   ],
   "bugs":
   {
-    "url": "https://github.com/AMI3GOLtd/react-native-honeywell-scanner/issues"
+    "url": "https://github.com/Sivakrishna644/react-native-honeywell-scanner.git/issues"
   },
-  "homepage": "https://github.com/AMI3GOLtd/react-native-honeywell-scanner#readme",
+  "homepage": "https://github.com/Sivakrishna644/react-native-honeywell-scanner#readme",
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
