@@ -32,13 +32,12 @@ HoneywellScanner.onBarcodeReadFail = (handler) =>
  * @param  {String} eventName Name of event one of barcodeReadSuccess, barcodeReadFail
  * @param  {Function} handler Event handler
  */
-HoneywellScanner.offBarcodeReadSuccess = () =>
-{
-    subscriptionBarcodeReadSuccess.remove();
+ HoneywellScanner.offBarcodeReadSuccess = () => {
+    subscriptionBarcodeReadSuccess === null || subscriptionBarcodeReadSuccess === void 0 ? void 0 : subscriptionBarcodeReadSuccess.remove();
 };
-HoneywellScanner.offBarcodeReadFail = () =>
-{
-    subscriptionBarcodeReadFail.remove();
+HoneywellScanner.offBarcodeReadFail = () => {
+    subscriptionBarcodeReadFail === null || subscriptionBarcodeReadFail === void 0 ? void 0 : subscriptionBarcodeReadFail.remove();
 };
+
 
 export default HoneywellScanner;
