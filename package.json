@@ -11,9 +11,6 @@
     "build": "tsc",
     "prepare": "npm run build"
   },
-  "precommit": [
-    "build"
-  ],
   "repository":
   {
     "type": "git",
