@@ -34,7 +34,7 @@ public class HoneywellScannerModule extends ReactContextBaseJavaModule implement
 
     @Override
     public String getName() {
-        return "HoneywellScanner";
+        return "HoneywellScannerV5";
     }
 
     /**

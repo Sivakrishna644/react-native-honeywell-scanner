@@ -40,12 +40,3 @@ android/*.iml
 buck-out/
 \.buckd/
 *.keystore
-
-# VISUAL STUDIO
-.vs
-
-# NPM
-.npmrc
-
-#TSC
-/dist
