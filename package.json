@@ -3,10 +3,11 @@
   "title": "React Native Honeywell Scanner-v3",
   "version": "0.0.3",
   "description": "Bridge to use the Honeywell scanner",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts":
   {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "npm run build"
   },
 
   "repository":
