@@ -57,6 +57,8 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
         if (D) Log.d(HoneyWellTAG, "HoneywellBarcodeReader - Barcode scan read");
         WritableMap params = Arguments.createMap();
         params.putString("data", barcodeReadEvent.getBarcodeData());
+        params.putString("BarcodeObj", barcodeReadEvent.toString());
+
         sendEvent(BARCODE_READ_SUCCESS, params);
     }
 
