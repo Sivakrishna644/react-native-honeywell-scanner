@@ -15,14 +15,14 @@ var subscriptionBarcodeReadFail = null;
 
 HoneywellScanner.onBarcodeReadSuccess = (handler) =>
 {
-    subscriptionBarcodeReadSuccess.remove();
+    subscriptionBarcodeReadSuccess === null || subscriptionBarcodeReadSuccess === void 0 ? void 0 : subscriptionBarcodeReadSuccess.remove();
     subscriptionBarcodeReadSuccess = null;
     subscriptionBarcodeReadSuccess = barcodeReaderEmitter.addListener(HoneywellScanner.BARCODE_READ_SUCCESS, handler);
 }
 
 HoneywellScanner.onBarcodeReadFail = (handler) =>
 {
-    subscriptionBarcodeReadFail.remove();
+    subscriptionBarcodeReadFail === null || subscriptionBarcodeReadFail === void 0 ? void 0 : subscriptionBarcodeReadFail.remove();
     subscriptionBarcodeReadFail = null;
     subscriptionBarcodeReadFail = barcodeReaderEmitter.addListener(HoneywellScanner.BARCODE_READ_FAIL, handler);
 }
