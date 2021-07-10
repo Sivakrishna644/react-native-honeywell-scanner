@@ -9,12 +9,12 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 
-public class HoneywellScannerPackage implements ReactPackage {
+public class HoneywellScannerV5Package implements ReactPackage {
     static final String HoneyWellTAG = "HoneywellBarcodeReader";
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(new HoneywellScannerModule(reactContext));
+        return Arrays.<NativeModule>asList(new HoneywellScannerV5Module(reactContext));
     }
 
     @Override

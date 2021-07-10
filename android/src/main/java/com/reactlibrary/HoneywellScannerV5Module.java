@@ -13,9 +13,9 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.reactlibrary.HoneywellScannerPackage.HoneyWellTAG;
+import static com.reactlibrary.HoneywellScannerV5Package.HoneyWellTAG;
 
-public class HoneywellScannerModule extends ReactContextBaseJavaModule implements BarcodeReader.BarcodeListener {
+public class HoneywellScannerV5Module extends ReactContextBaseJavaModule implements BarcodeReader.BarcodeListener {
 
     // Debugging
     private static final boolean D = true;
@@ -27,7 +27,7 @@ public class HoneywellScannerModule extends ReactContextBaseJavaModule implement
     private static final String BARCODE_READ_SUCCESS = "barcodeReadSuccess";
     private static final String BARCODE_READ_FAIL = "barcodeReadFail";
 
-    public HoneywellScannerModule(ReactApplicationContext reactContext) {
+    public HoneywellScannerV5Module(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
     }
@@ -82,7 +82,7 @@ public class HoneywellScannerModule extends ReactContextBaseJavaModule implement
                     e.printStackTrace();
                 }
                 if (reader != null) {
-                    reader.addBarcodeListener(HoneywellScannerModule.this);
+                    reader.addBarcodeListener(HoneywellScannerV5Module.this);
                     try {
                         reader.claim();
                         reader.setProperty(BarcodeReader.PROPERTY_TRIGGER_CONTROL_MODE, BarcodeReader.TRIGGER_CONTROL_MODE_AUTO_CONTROL);
