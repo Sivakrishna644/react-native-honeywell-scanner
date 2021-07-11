@@ -119,6 +119,28 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
             }
         });
     }
+
+    @ReactMethod
+    public void setPropertyForBarcodeReader(
+        Map<String, Object> properties,
+        Callback errorCallback,
+        Callback successCallback) {
+           try {
+            if(reader != null){
+
+                reader.setProperties(properties);
+                successCallback.invoke();
+
+            }
+           } catch (Exception e) {
+               //TODO: handle exception
+               errorCallback.invoke(e.getMessage());      
+
+           }
+  }
+
+
+
     @ReactMethod
     public void triggerSoftwareSCanner(Promise promise) {
         Log.v(HoneyWellTAG, "triggerSoftwareSCanner: " + reader);
