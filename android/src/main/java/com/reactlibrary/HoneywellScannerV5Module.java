@@ -57,8 +57,6 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
         if (D) Log.d(HoneyWellTAG, "HoneywellBarcodeReader - Barcode scan read");
         WritableMap params = Arguments.createMap();
         params.putString("data", barcodeReadEvent.getBarcodeData());
-        params.putString("BarcodeObj", barcodeReadEvent.toString());
-
         sendEvent(BARCODE_READ_SUCCESS, params);
     }
 
@@ -118,44 +116,6 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                 }
             }
         });
-    }
-
-    @ReactMethod
-    public void setPropertyForBarcodeReader(
-        Map<String, Object> properties,
-        Callback errorCallback,
-        Callback successCallback) {
-           try {
-               Log.v("properties",properties.toString());
-            if(reader != null){
-
-                reader.setProperties(properties);
-                successCallback.invoke();
-
-            }
-           } catch (Exception e) {
-               //TODO: handle exception
-               errorCallback.invoke(e.getMessage());      
-
-           }
-  }
-
-
-
-    @ReactMethod
-    public void triggerSoftwareSCanner(Promise promise) {
-        Log.v(HoneyWellTAG, "triggerSoftwareSCanner: " + reader);
-            if(reader != null){
-                try {
-                    reader.softwareTrigger(true);
-                } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
-                    Log.v(HoneyWellTAG, "exception: " + e.getMessage());
-                }
-
-            }else{
-                Log.v(HoneyWellTAG, "else: No Scanner");
-            }
-
     }
 
     @ReactMethod
