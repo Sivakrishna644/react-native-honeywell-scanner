@@ -119,6 +119,35 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
             }
         });
     }
+    @ReactMethod
+    public void triggerSoftwareSCanner(Promise promise) {
+        Log.v(HoneyWellTAG, "triggerSoftwareSCanner: " + reader);
+            if(reader !== null){
+                try {
+                    reader.softwareTrigger(true);
+                } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
+                    Log.v(HoneyWellTAG, "exception: " + e.getMessage());
+                }
+
+            }else{
+                Log.v(HoneyWellTAG, "else: No Scanner");
+            }
+
+    }
+
+    @ReactMethod
+    public void triggerSoftwareScanner(BarcodeReader barcodeReader) {
+        if (barcodeReader != null) {
+            try {
+                barcodeReader.softwareTrigger(true);
+            } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
+                FollettLog.e(TAG, e.getMessage());
+                setErrorMessage(e.getMessage());
+            }
+        } else {
+            setErrorMessage(BARCODE_READER_NOT_AVAILABLE);
+        }
+    }
 
     @ReactMethod
     public void stopReader(Promise promise) {
