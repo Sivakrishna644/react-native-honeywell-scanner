@@ -136,20 +136,6 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
     }
 
     @ReactMethod
-    public void triggerSoftwareScanner(BarcodeReader barcodeReader) {
-        if (barcodeReader != null) {
-            try {
-                barcodeReader.softwareTrigger(true);
-            } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
-                FollettLog.e(TAG, e.getMessage());
-                setErrorMessage(e.getMessage());
-            }
-        } else {
-            setErrorMessage(BARCODE_READER_NOT_AVAILABLE);
-        }
-    }
-
-    @ReactMethod
     public void stopReader(Promise promise) {
         if (reader != null) {
             reader.close();
