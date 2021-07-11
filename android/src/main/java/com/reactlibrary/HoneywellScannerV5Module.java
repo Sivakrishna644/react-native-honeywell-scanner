@@ -122,7 +122,7 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
     @ReactMethod
     public void triggerSoftwareSCanner(Promise promise) {
         Log.v(HoneyWellTAG, "triggerSoftwareSCanner: " + reader);
-            if(reader !== null){
+            if(reader != null){
                 try {
                     reader.softwareTrigger(true);
                 } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
