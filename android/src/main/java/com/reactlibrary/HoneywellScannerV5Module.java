@@ -126,6 +126,7 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
         Callback errorCallback,
         Callback successCallback) {
            try {
+               Log.v("properties",properties.toString());
             if(reader != null){
 
                 reader.setProperties(properties);
