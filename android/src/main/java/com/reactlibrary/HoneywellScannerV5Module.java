@@ -86,8 +86,7 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                     try {
                         reader.claim();
                         reader.setProperty(BarcodeReader.PROPERTY_TRIGGER_CONTROL_MODE, BarcodeReader.TRIGGER_CONTROL_MODE_AUTO_CONTROL);
-                        reader.setProperty(BarcodeReader.PROPERTY_EAN_8_CHECK_DIGIT_TRANSMIT_ENABLED, true);
-                        reader.setProperty(BarcodeReader.PROPERTY_EAN_13_CHECK_DIGIT_TRANSMIT_ENABLED, true);
+
                         Map<String, Object> properties = new HashMap<>();
                         properties.put(BarcodeReader.PROPERTY_CODE_128_ENABLED, true);
                         properties.put(BarcodeReader.PROPERTY_GS1_128_ENABLED, true);
@@ -106,6 +105,8 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                         properties.put(BarcodeReader.PROPERTY_CENTER_DECODE, true);
                         // Enable bad read response
                         properties.put(BarcodeReader.PROPERTY_NOTIFICATION_BAD_READ_ENABLED, true);
+                        //New Propeties available from the Honeywell Lib
+
                         reader.setProperties(properties);
 
                         promise.resolve(true);
