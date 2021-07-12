@@ -143,7 +143,7 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                         reader.setProperties(properties);
 
                         promise.resolve(true);
-                    } catch (ScannerUnavailableException | UnsupportedPropertyException e) {
+                    } catch (Exception e) {
                         promise.resolve(false);
                         e.printStackTrace();
                     }
