@@ -73,7 +73,7 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'
-    implementation project(path: ':DataCollection')
+    implementation project(':DataCollection')
 }
 
 def configureReactNativePom(def pom) {
