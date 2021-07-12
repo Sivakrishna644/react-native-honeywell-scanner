@@ -63,6 +63,12 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
     @Override
     public void onFailureEvent(BarcodeFailureEvent barcodeFailureEvent) {
         if (D) Log.d(HoneyWellTAG, "HoneywellBarcodeReader - Barcode scan failed");
+
+        try {
+            reader.softwareTrigger(false);
+        } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
+            e.printStackTrace();
+        }
         sendEvent(BARCODE_READ_FAIL, null);
     }
 
@@ -78,10 +84,8 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                 manager = aidcManager;
                 try {
                     reader = manager.createBarcodeReader();
-                    reader.addBarcodeListener(HoneywellScannerV5Module.this);
-                    reader.claim();
                     promise.resolve(true);
-                } catch (Exception e) {
+                } catch (InvalidScannerNameException e) {
                     e.printStackTrace();
                     promise.resolve(false);
                 }
@@ -95,12 +99,12 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
             try {
                 reader.softwareTrigger(true);
                 promise.resolve(true);
+
             } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
                 Log.v("TAG", e.getMessage());
-                promise.resolve(false);
             }
         } else {
-            Log.v("TAG", "SoftwareScanner Not Available");
+            Log.v("TAG", "Barcode Reader Not Available");
         }
     }
 
@@ -119,7 +123,9 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                 if (reader != null) {
                     reader.addBarcodeListener(HoneywellScannerV5Module.this);
                     try {
+                        reader.claim();
                         reader.setProperty(BarcodeReader.PROPERTY_TRIGGER_CONTROL_MODE, BarcodeReader.TRIGGER_CONTROL_MODE_AUTO_CONTROL);
+
                         Map<String, Object> properties = new HashMap<>();
                         properties.put(BarcodeReader.PROPERTY_CODE_128_ENABLED, true);
                         properties.put(BarcodeReader.PROPERTY_GS1_128_ENABLED, true);
@@ -143,7 +149,7 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                         reader.setProperties(properties);
 
                         promise.resolve(true);
-                    } catch (Exception e) {
+                    } catch (ScannerUnavailableException | UnsupportedPropertyException e) {
                         promise.resolve(false);
                         e.printStackTrace();
                     }
