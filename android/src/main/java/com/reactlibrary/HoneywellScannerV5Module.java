@@ -79,8 +79,9 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                 try {
                     reader = manager.createBarcodeReader();
                     reader.addBarcodeListener(HoneywellScannerV5Module.this);
+                    reader.claim();
                     promise.resolve(true);
-                } catch (InvalidScannerNameException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     promise.resolve(false);
                 }
@@ -140,7 +141,7 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                         //New Propeties available from the Honeywell Lib
 
                         reader.setProperties(properties);
-                        reader.claim();
+
                         promise.resolve(true);
                     } catch (ScannerUnavailableException | UnsupportedPropertyException e) {
                         promise.resolve(false);
