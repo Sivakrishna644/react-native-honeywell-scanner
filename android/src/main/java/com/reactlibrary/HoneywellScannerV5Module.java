@@ -63,50 +63,13 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
     @Override
     public void onFailureEvent(BarcodeFailureEvent barcodeFailureEvent) {
         if (D) Log.d(HoneyWellTAG, "HoneywellBarcodeReader - Barcode scan failed");
-
-        try {
-            reader.softwareTrigger(false);
-        } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
-            e.printStackTrace();
-        }
         sendEvent(BARCODE_READ_FAIL, null);
     }
 
     /*******************************/
     /** Methods Available from JS **/
     /*******************************/
-    @ReactMethod
-    private void inItializeScanner(final Promise promise) {
-        AidcManager.create(reactContext, new AidcManager.CreatedCallback() {
 
-            @Override
-            public void onCreated(AidcManager aidcManager) {
-                manager = aidcManager;
-                try {
-                    reader = manager.createBarcodeReader();
-                    promise.resolve(true);
-                } catch (InvalidScannerNameException e) {
-                    e.printStackTrace();
-                    promise.resolve(false);
-                }
-            }
-        });
-    }
-
-    @ReactMethod
-    public void triggerSoftwareScanner(final Promise promise) {
-        if (reader != null) {
-            try {
-                reader.softwareTrigger(true);
-                promise.resolve(true);
-
-            } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
-                Log.v("TAG", e.getMessage());
-            }
-        } else {
-            Log.v("TAG", "Barcode Reader Not Available");
-        }
-    }
 
     @ReactMethod
     public void startReader(final Promise promise) {
