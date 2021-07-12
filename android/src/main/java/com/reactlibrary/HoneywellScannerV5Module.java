@@ -63,13 +63,90 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
     @Override
     public void onFailureEvent(BarcodeFailureEvent barcodeFailureEvent) {
         if (D) Log.d(HoneyWellTAG, "HoneywellBarcodeReader - Barcode scan failed");
+
+        try {
+            reader.softwareTrigger(false);
+        } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
+            e.printStackTrace();
+        }
         sendEvent(BARCODE_READ_FAIL, null);
     }
 
     /*******************************/
     /** Methods Available from JS **/
     /*******************************/
+    @ReactMethod
+    private void inItializeScanner(final Promise promise) {
+        AidcManager.create(reactContext, new AidcManager.CreatedCallback() {
 
+            @Override
+            public void onCreated(AidcManager aidcManager) {
+                manager = aidcManager;
+                try {
+                    reader = manager.createBarcodeReader();
+                    reader.addBarcodeListener(HoneywellScannerV5Module.this);
+                    reader.setProperty(BarcodeReader.PROPERTY_TRIGGER_CONTROL_MODE, BarcodeReader.TRIGGER_CONTROL_MODE_AUTO_CONTROL);
+                    Map<String, Object> properties = new HashMap<>();
+                    properties.put(BarcodeReader.PROPERTY_CODE_128_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_GS1_128_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_QR_CODE_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_CODE_39_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_DATAMATRIX_ENABLED, true);
+                    properties.put(BarcodeReader.PROPERTY_UPC_A_ENABLE, true);
+                    properties.put(BarcodeReader.PROPERTY_EAN_13_ENABLED, false);
+                    properties.put(BarcodeReader.PROPERTY_AZTEC_ENABLED, false);
+                    properties.put(BarcodeReader.PROPERTY_CODABAR_ENABLED, false);
+                    properties.put(BarcodeReader.PROPERTY_INTERLEAVED_25_ENABLED, false);
+                    properties.put(BarcodeReader.PROPERTY_PDF_417_ENABLED, false);
+                    // Set Max Code 39 barcode length
+                    properties.put(BarcodeReader.PROPERTY_CODE_39_MAXIMUM_LENGTH, 10);
+                    // Turn on center decoding
+                    properties.put(BarcodeReader.PROPERTY_CENTER_DECODE, true);
+                    // Enable bad read response
+                    properties.put(BarcodeReader.PROPERTY_NOTIFICATION_BAD_READ_ENABLED, true);
+                    //New Propeties available from the Honeywell Lib
+
+                    reader.setProperties(properties);
+
+                    promise.resolve(true);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    promise.resolve(false);
+                }
+            }
+        });
+    }
+
+
+    @ReactMethod
+    private void triggerSoftwareScanner(final Promise promise) {
+        if (reader != null) {
+            try {
+                reader.softwareTrigger(true);
+                promise.resolve(true);
+            } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
+                Log.v("TAG", e.getMessage());
+                promise.resolve(false);
+            }
+        } else {
+            Log.v("TAG", "SoftwareScanner Not Available");
+        }
+    }
+
+    @ReactMethod
+    public void readHardwareScannerResult(final Promise promise){
+
+        try {
+            reader.claim();
+            promise.resolve(true);
+        } catch (ScannerUnavailableException e) {
+            e.printStackTrace();
+            promise.resolve(false);
+
+        }
+
+    }
 
     @ReactMethod
     public void startReader(final Promise promise) {
@@ -86,9 +163,7 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                 if (reader != null) {
                     reader.addBarcodeListener(HoneywellScannerV5Module.this);
                     try {
-                        reader.claim();
                         reader.setProperty(BarcodeReader.PROPERTY_TRIGGER_CONTROL_MODE, BarcodeReader.TRIGGER_CONTROL_MODE_AUTO_CONTROL);
-
                         Map<String, Object> properties = new HashMap<>();
                         properties.put(BarcodeReader.PROPERTY_CODE_128_ENABLED, true);
                         properties.put(BarcodeReader.PROPERTY_GS1_128_ENABLED, true);
@@ -112,7 +187,7 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                         reader.setProperties(properties);
 
                         promise.resolve(true);
-                    } catch (ScannerUnavailableException | UnsupportedPropertyException e) {
+                    } catch (Exception e) {
                         promise.resolve(false);
                         e.printStackTrace();
                     }
@@ -123,6 +198,12 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
 
     @ReactMethod
     public void stopReader(Promise promise) {
+
+        try {
+            reader.softwareTrigger(false);
+        } catch (ScannerNotClaimedException | ScannerUnavailableException e) {
+            e.printStackTrace();
+        }
         if (reader != null) {
             reader.close();
         }
@@ -131,6 +212,26 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
         }
         promise.resolve(null);
     }
+
+    @ReactMethod
+    public void onResumeScanner(Promise promise) {
+        if (reader != null) {
+            try {
+                reader.claim();
+            } catch (ScannerUnavailableException e) {
+                Log.v("TAG", e.getMessage()+" Scanner Unavailable");
+            }
+        }
+    }
+
+    @ReactMethod
+    public void onPauseScanner(Promise promise) {
+        if (reader != null) {
+            reader.release();
+        }
+    }
+
+
 
     private boolean isCompatible() {
         // This... is not optimal. Need to find a better way to performantly check whether device has a Honeywell scanner
@@ -147,3 +248,4 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
     }
 
 }
+
