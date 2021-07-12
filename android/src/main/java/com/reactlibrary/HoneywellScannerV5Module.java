@@ -80,7 +80,7 @@ public class HoneywellScannerV5Module extends ReactContextBaseJavaModule impleme
                 try {
                     reader = manager.createBarcodeReader();
 
-                } catch (InvalidScannerNameException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 if (reader != null) {

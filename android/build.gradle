@@ -73,7 +73,8 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'
-    implementation files('libs/DataCollection.aar')
+    implementation files('libs/DataCollection.jar')
+//    implementation files('libs/DataCollection.aar')
     //implementation files (':')
 }
 
