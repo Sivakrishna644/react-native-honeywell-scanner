@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import static com.reactlibrary.HoneywellScannerV5Package.HoneyWellTAG;
 
 public class HoneywellScannerV5Module extends ReactContextBaseJavaModule implements BarcodeReader.BarcodeListener {
